@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
@@ -20,7 +21,7 @@ def home():
     return render_template('index.html')
 
 # Parkinson's Disease Prediction
-parkinson_model = pickle.load(open('./compressed_models/parkinson_classifier_model.pkl','rb'))
+parkinson_model = pickle.load(open('./compressed_models/parkinson_disease/parkinson_classifier_model.pkl','rb'))
 
 @app.route('/parkinson', methods=['GET', 'POST'])
 def parkinson():  #matching the route parkinson in urlfor
@@ -36,13 +37,13 @@ def parkinson():  #matching the route parkinson in urlfor
             # Convert predictions to human-readable format
             result = ["The Person does not have Parkinson's Disease" if p == 0 else "The Person has Parkinson's" for p in predictions]
             # Pass the result to the HTML page for display
-            return render_template('Parkinson/upload.html', result=result)
+            return render_template('Parkinson/index.html', result=result)
         return "No file selected!"
-    return render_template('Parkinson/upload.html')
+    return render_template('Parkinson/index.html')
 
 
 # Heart Disease Prediction
-heart_model = pickle.load(open('./compressed_models/heart-disease-model.pkl','rb'))
+heart_model = pickle.load(open('./compressed_models/heart_disease/heart-disease-model.pkl','rb'))
 
 @app.route('/heart', methods=['GET', 'POST'])
 def heart(): 
@@ -99,8 +100,8 @@ def heart():
               result = "Heart Disease Detected"
          else:
               result = "No Heart Disease Detected"
-         return render_template('Heart/form.html', result=result)
-    return render_template('Heart/form.html')
+         return render_template('Heart/index.html', result=result)
+    return render_template('Heart/index.html')
 
 # Brain Tumor Prediction
 brain_model = load_model('./compressed_models/brain_tumor/brain_model.h5')
@@ -134,79 +135,39 @@ def brain():
             if p != 1:
                 result = f'The Model predicts that it is a {p}'
             
-            return render_template('Brain/tumor.html', result=result)
+            return render_template('Brain/index.html', result=result)
         return "No file selected!"
-    return render_template('Brain/tumor.html')
+    return render_template('Brain/index.html')
 
 
 
-# Load the Alzheimer's model
 
 
-# Define the base InceptionV3 model
-base_inception_model = InceptionV3(input_shape=(176, 176, 3), include_top=False, weights='imagenet')
-base_inception_model.trainable = False
-
-# Create your custom Inception model
-loaded = Sequential([
-    base_inception_model,
-    Dropout(0.5),
-    GlobalAveragePooling2D(),
-    Flatten(),
-    BatchNormalization(),
-    Dense(512, activation='relu'),
-    BatchNormalization(),
-    Dropout(0.5),
-    Dense(256, activation='relu'),
-    BatchNormalization(),
-    Dropout(0.5),
-    Dense(128, activation='relu'),
-    BatchNormalization(),
-    Dropout(0.5),
-    Dense(64, activation='relu'),
-    Dropout(0.5),
-    BatchNormalization(),
-    Dense(4, activation='softmax')        
-], name="inception_cnn_model")
-
-METRICS = [tf.keras.metrics.CategoricalAccuracy(name='acc'),
-           tf.keras.metrics.AUC(name='auc')
-           ]
-
-    
-loaded.compile(optimizer='rmsprop',
-                              loss=tf.losses.CategoricalCrossentropy(),
-                              metrics=METRICS)
-
-loaded.summary()
-# Load the saved model weights
-loaded.load_weights('./compressed_models/alzheimers/alzheimers_model_weights.h5')
+loaded = load_model('./compressed_models/alzheimers/alzheimers_vgg.h5')
 
 print("Alzheimer's model loaded successfully!")
 
 def preprocess_image(image_path, target_size=(176, 176)):
-
-    # Load the image
-    img = cv2.imread(image_path)
+    image_data = image_path.read()
+    # Convert the image data into a PIL Image object
+    image_pil = Image.open(io.BytesIO(image_data))
+    # Convert the PIL Image to a numpy array
+    image_np = np.asarray(image_pil)
     # Resize the image
-    img = cv2.resize(img, target_size)
+    img = cv2.resize(image_np, target_size)
+    # Convert the image to RGB (if it's not already)
+    if len(img.shape) == 2:  # If the image is grayscale
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+    elif img.shape[2] == 1:  # If the image has only one channel
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     # Normalize the pixel values
     preprocessed_img = img / 255.0
     # Expand dimensions to match the model input shape
     preprocessed_img = np.expand_dims(preprocessed_img, axis=0)
     return preprocessed_img
 
+
 def predict_on_image(image_path, model):
-    """
-    Predicts the class label for the given image using the provided model.
-    
-    Args:
-    - image_path: Path to the image file.
-    - model: Trained model for prediction.
-    
-    Returns:
-    - predicted_class: Predicted class label for the image.
-    """
     # Preprocess the image
     preprocessed_img = preprocess_image(image_path)
     # Perform prediction
@@ -224,9 +185,9 @@ def alzheimers():
         if image:
             # Perform prediction
             predicted_class = predict_on_image(image, loaded)
-            return render_template('Brain/pic.html', result=predicted_class)
+            return render_template('Alzheimers/index.html', result=predicted_class)
         return "No file selected!"
-    return render_template('Alzheimers/pic.html')
+    return render_template('Alzheimers/index.html')
 
 
 if __name__ == '__main__':
