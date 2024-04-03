@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+</head>
+<body>
+    <h2>Heart Disease Prediction</h2>
+    <form method="POST" enctype="multipart/form-data" action="/heart">
+        <label for="age">Age:</label>
+        <input type="text" name="age" id="age"><br><br>
+
+        <label for="sex">Sex:</label>
+        <select name="sex" id="sex">
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </select><br><br>
+
+        <label for="chest_pain_type">Chest Pain Type:</label>
+        <select name="chest_pain_type" id="chest_pain_type">
+            <option value="1">Typical Angina</option>
+            <option value="2">Atypical Angina</option>
+            <option value="3">Non-anginal Pain</option>
+        </select><br><br>
+
+        <label for="resting_blood_pressure">Resting Blood Pressure:</label>
+        <input type="text" name="resting_blood_pressure" id="resting_blood_pressure"><br><br>
+
+        <label for="serum_cholesterol">Serum Cholesterol (mg/dL):</label>
+        <input type="text" name="serum_cholesterol" id="serum_cholesterol"><br><br>
+
+        <label for="fasting_blood_sugar">Fasting Blood Sugar &gt; 120 mg/dL:</label>
+        <select name="fasting_blood_sugar" id="fasting_blood_sugar">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select><br><br>
+
+        <label for="resting_ecg">Resting Electrocardiographic Results:</label>
+        <select name="resting_ecg" id="resting_ecg">
+            <option value="0">Normal</option>
+            <option value="1">Having ST-T Wave Abnormality</option>
+            <option value="2">Showing Probable or Definite Left Ventricular Hypertrophy</option>
+        </select><br><br>
+
+        <label for="max_heart_rate">Maximum Heart Rate Achieved:</label>
+        <input type="text" name="max_heart_rate" id="max_heart_rate"><br><br>
+
+        <label for="exercise_angina">Exercise Induced Angina:</label>
+        <select name="exercise_angina" id="exercise_angina">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select><br><br>
+
+        <label for="oldpeak">ST Depression Induced by Exercise:</label>
+        <input type="text" name="oldpeak" id="oldpeak"><br><br>
+
+        <label for="slope">Slope of the Peak Exercise ST Segment:</label>
+        <select name="slope" id="slope">
+            <option value="1">Upsloping</option>
+            <option value="2">Flat</option>
+            <option value="3">Downsloping</option>
+        </select><br><br>
+
+        <label for="num_vessels">Number of Major Vessels Colored by Fluoroscopy:</label>
+        <input type="text" name="num_vessels" id="num_vessels"><br><br>
+
+        <label for="thal">Thal:</label>
+        <select name="thal" id="thal">
+            <option value="1">Normal</option>
+            <option value="2">Fixed Defect</option>
+            <option value="3">Reversible Defect</option>
+        </select><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+    {% if result %}
+        <h3>Result:</h3>
+        <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>
