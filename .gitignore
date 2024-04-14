@@ -2,6 +2,9 @@
 /node_modules
 /.pnp
 .pnp.js
+/api/node_modules
+/api/_pycache__
+
 
 # testing
 /coverage
