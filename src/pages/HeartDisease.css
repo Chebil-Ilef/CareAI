@@ -1,0 +1,74 @@
+.heart-disease {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%; /* Adjust this value as needed */
+  }
+  
+  
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .form-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .submit-button {
+    grid-column: span 2;
+    margin-top: 25px;
+    border: 1px solid #00ddff;
+    border-radius: 5px;
+    padding: 8px;
+    transition: border-color 0.3s;
+    background-color:#affafb;
+
+  }
+  .submit-button:focus {
+    border-color: #7f51ff; /* Change to your desired color */
+    outline: 10px;
+    background-color:  #e9e9ff;
+
+  }
+
+
+  /* Add this CSS to your existing styles */
+.input-field {
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+    transition: border-color 0.3s;
+  }
+  
+  .input-field:focus {
+    border-color: #33ffff; /* Change to your desired color */
+    outline: 10px;
+  }
+  
+
+  p{
+    margin-top: -8px;
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #7f51ff;
+  }
+
+  h3{
+    margin-top: 40px;
+
+    color: #00BAFF;
+
+  }

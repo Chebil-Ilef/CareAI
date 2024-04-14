@@ -9,6 +9,12 @@ import Parkinson from "./pages/Parkinson";
 import Sidebar from "./components/Sidebar";
 
 function App() {
+    const handleSubmit = async (formData) => {
+        // for now just return a dummy response
+        return { data: { result: 'Heart Disease Detected' } };
+    };
+
+
     return (
         <Router>
             <div className="App">
@@ -19,7 +25,7 @@ function App() {
                     <Route path="/BrainCancer" element={<BrainCancer />} />
                     <Route path="/Alzheimers" element={<Alzheimers />} />
                     <Route path="/Parkinson" element={<Parkinson />} />
-                    <Route path="/HeartDisease" element={<HeartDisease />} />
+                    <Route path="/HeartDisease" element={<HeartDisease onSubmit={handleSubmit} />} />
                 </Routes>
             </div>
         </Router>
