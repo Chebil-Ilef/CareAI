@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import numpy as np
 import pickle
@@ -12,8 +12,12 @@ from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dropout, GlobalAveragePooling2D, Flatten, BatchNormalization, Dense
 from keras.applications import InceptionV3
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
 
 # Home route
 @app.route('/')
@@ -106,6 +110,8 @@ def heart():
 # Brain Tumor Prediction
 brain_model = load_model('./compressed_models/brain_tumor/brain_model.h5')
 print("brain_model loaded successfully!")
+
+@cross_origin()
 @app.route('/brain', methods=['GET', 'POST'])
 def brain(): 
     if request.method == 'POST':
@@ -124,18 +130,19 @@ def brain():
             p = np.argmax(p, axis=1)[0]
 
             if p == 0:
-                p = 'Glioma Tumor'
+                result = 'Glioma Tumor'
             elif p == 1:
                 result = 'The model predicts that there is no tumor'
             elif p == 2:
-                p = 'Meningioma Tumor'
+                result = 'Meningioma Tumor'
             else:
-                p = 'Pituitary Tumor'
+                result = 'Pituitary Tumor'
             
             if p != 1:
-                result = f'The Model predicts that it is a {p}'
+                result = f'The Model predicts that it is a {result}'
             
-            return render_template('Brain/index.html', result=result)
+            return jsonify({'result': result})
+
         return "No file selected!"
     return render_template('Brain/index.html')
 
@@ -177,6 +184,7 @@ def predict_on_image(image_path, model):
     predicted_class = class_names[np.argmax(predictions)]
     return predicted_class
 
+@cross_origin()
 @app.route('/alzheimers', methods=['GET', 'POST'])
 def alzheimers(): 
     if request.method == 'POST':
@@ -185,7 +193,8 @@ def alzheimers():
         if image:
             # Perform prediction
             predicted_class = predict_on_image(image, loaded)
-            return render_template('Alzheimers/index.html', result=predicted_class)
+            return jsonify({'result': predicted_class})
+
         return "No file selected!"
     return render_template('Alzheimers/index.html')
 

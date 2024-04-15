@@ -1,8 +1,12 @@
+
+
 .heart-disease {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5%;
+    margin-top: -2%;
+    margin-left: 10%;
+
   }
   
   .form-container {
