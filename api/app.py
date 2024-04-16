@@ -55,25 +55,26 @@ def parkinson():
 # Heart Disease Prediction
 heart_model = pickle.load(open('./compressed_models/heart_disease/heart-disease-model.pkl','rb'))
 
+@cross_origin()
 @app.route('/heart', methods=['GET', 'POST'])
 def heart():
     if request.method == 'POST':
         try:
-            
-            # Extract features from the JSON data
-            age = int(request.form['age'])
-            sex = int(request.form['sex'])
-            chest_pain_type = int(request.form['chest_pain_type'])
-            resting_blood_pressure = int(request.form['resting_blood_pressure'])
-            serum_cholesterol = int(request.form['serum_cholesterol'])
-            fasting_blood_sugar = int(request.form['fasting_blood_sugar'])
-            resting_ecg = int(request.form['resting_ecg'])
-            max_heart_rate = float(request.form['max_heart_rate'])
-            exercise_angina = int(request.form['exercise_angina'])
-            oldpeak = float(request.form['oldpeak'])
-            slope = int(request.form['slope'])
-            num_vessels = int(request.form['num_vessels'])
-            thal = int(request.form['thal'])
+            data = request.json
+            print(data)
+            age = int(data['age'])
+            sex = int(data['sex'])
+            chest_pain_type = int(data['chest_pain_type'])
+            resting_blood_pressure = int(data['resting_blood_pressure'])
+            serum_cholesterol = int(data['serum_cholesterol'])
+            fasting_blood_sugar = int(data['fasting_blood_sugar'])
+            resting_ecg = int(data['resting_ecg'])
+            max_heart_rate = float(data['max_heart_rate'])
+            exercise_angina = int(data['exercise_angina'])
+            oldpeak = float(data['oldpeak'])
+            slope = int(data['slope'])
+            num_vessels = int(data['num_vessels'])
+            thal = int(data['thal'])
             
             # Prepare the input data for prediction
             input_data = {
@@ -113,8 +114,8 @@ def heart():
         
         except Exception as e:
             return jsonify({'error': str(e)}), 400  # Bad Request
-    
-    return jsonify({'error': 'Invalid request method'}), 405  # Method Not Allowed
+    return render_template('Heart/index.html')
+   
 
 # Brain Tumor Prediction
 brain_model = load_model('./compressed_models/brain_tumor/brain_model.h5')

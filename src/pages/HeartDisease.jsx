@@ -14,37 +14,37 @@ function HeartDisease() {
         exercise_angina: '0',
         oldpeak: '',
         slope: '1',
-        num_vessels: '',
+        num_vessels: '0',
         thal: '1'
     });
     const [result, setResult] = useState('');
 
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
+      const { name, value } = e.target;
+      setFormData({
+          ...formData,
+          [name]: value
+      });
+  };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('http://localhost:5000/heart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            console.log(response);
-            console.log(JSON.stringify(formData));
-            const data = await response.json();
-            setResult(data.result);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+      e.preventDefault();
+      fetch('http://localhost:5000/heart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData) // Convert form data to JSON string
+      })
+      .then(response => response.json())
+      .then(data => {
+        setResult(data.result);
+      })
+      .catch(error => console.error('Error:', error));
+      
+      console.log(formData);
+  };
 
     return (
       <div className="heart-disease">
