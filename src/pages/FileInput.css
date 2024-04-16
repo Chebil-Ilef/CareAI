@@ -14,7 +14,16 @@ h2{
 
 }
 
-  
+  .predict{
+    margin-top: -25px;
+    margin-bottom: 10px;
+    border: 1px solid #00ddff;
+    border-radius: 5px;
+    padding: 8px;
+    transition: border-color 0.3s;
+    background-color:#affafb;
+
+  }
 .container{
   margin: 0;
   margin-left: 15%;

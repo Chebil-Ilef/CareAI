@@ -27,85 +27,94 @@ def home():
 # Parkinson's Disease Prediction
 parkinson_model = pickle.load(open('./compressed_models/parkinson_disease/parkinson_classifier_model.pkl','rb'))
 
+@cross_origin()
 @app.route('/parkinson', methods=['GET', 'POST'])
-def parkinson():  #matching the route parkinson in urlfor
+def parkinson():
     if request.method == 'POST':
         file = request.files['file']
         if file:
-            # Read the uploaded CSV file into a pandas DataFrame
-            df = pd.read_csv(file)
-            numpy_array = df.to_numpy()
-            input_data_reshaped = numpy_array.reshape(1,-1)
-            # Perform predictions on the data
-            predictions = parkinson_model.predict(input_data_reshaped)
-            # Convert predictions to human-readable format
-            result = ["The Person does not have Parkinson's Disease" if p == 0 else "The Person has Parkinson's" for p in predictions]
-            # Pass the result to the HTML page for display
-            return render_template('Parkinson/index.html', result=result)
-        return "No file selected!"
+            try:
+                # Read the uploaded CSV file into a pandas DataFrame
+                df = pd.read_csv(file)
+                # Perform predictions on the data
+                predictions = parkinson_model.predict(df)
+                # Convert predictions to human-readable format
+                for p in predictions:
+                    if p == 0 :
+                        result = "The person does not have Parkinson's disease" 
+                    else :
+                        result = "The person has Parkinson's" 
+                return jsonify({'result': result})
+            except Exception as e:
+                return jsonify({'error': str(e)})
+        return jsonify({'error': 'No file selected!'})
     return render_template('Parkinson/index.html')
+
 
 
 # Heart Disease Prediction
 heart_model = pickle.load(open('./compressed_models/heart_disease/heart-disease-model.pkl','rb'))
 
 @app.route('/heart', methods=['GET', 'POST'])
-def heart(): 
+def heart():
     if request.method == 'POST':
-        # Get form data
-         age = int(request.form['age'])
-         sex = int(request.form['sex'])
-         chest_pain_type = int(request.form['chest_pain_type'])
-         resting_blood_pressure = int(request.form['resting_blood_pressure'])
-         serum_cholesterol = int(request.form['serum_cholesterol'])
-         fasting_blood_sugar = int(request.form['fasting_blood_sugar'])
-         resting_ecg = int(request.form['resting_ecg'])
-         max_heart_rate = float(request.form['max_heart_rate'])
-         exercise_angina = int(request.form['exercise_angina'])
-         oldpeak = float(request.form['oldpeak'])
-         slope = int(request.form['slope'])
-         num_vessels = int(request.form['num_vessels'])
-         thal = int(request.form['thal'])
-         
-         # Create a dictionary with input data
-         input_data = {
-            'age': age,
-            'sex': sex,
-            'trestbps': resting_blood_pressure,
-            'chol': serum_cholesterol,
-            'thalach': max_heart_rate,
-            'oldpeak': oldpeak,
-            'cp_1': 1 if chest_pain_type == 1 else 0,
-            'cp_2': 1 if chest_pain_type == 2 else 0,
-            'cp_3': 1 if chest_pain_type == 3 else 0,
-            'fbs_1': fasting_blood_sugar,
-            'restecg_1': 1 if resting_ecg == 1 else 0,
-            'restecg_2': 1 if resting_ecg == 2 else 0,
-            'exang_1': exercise_angina,
-            'slope_1': 1 if slope == 1 else 0,
-            'slope_2': 1 if slope == 2 else 0,
-            'ca_1': 1 if num_vessels == 1 else 0,
-            'ca_2': 1 if num_vessels == 2 else 0,
-            'ca_3': 1 if num_vessels == 3 else 0,
-            'ca_4': 1 if num_vessels == 4 else 0,
-            'thal_1': 1 if thal == 1 else 0,
-            'thal_2': 1 if thal == 2 else 0,
-            'thal_3': 1 if thal == 3 else 0
-        }
-
-        # Create a DataFrame from the input data
-         input_df = pd.DataFrame([input_data])
-
-        # Make prediction
-         prediction = heart_model.predict(input_df)
-
-        # Return prediction result
-         if prediction == 1:
-              result = "Heart Disease Detected"
-         else:
-              result = "No Heart Disease Detected"
-         return render_template('Heart/index.html', result=result)
-    return render_template('Heart/index.html')
+        try:
+            
+            # Extract features from the JSON data
+            age = int(request.form['age'])
+            sex = int(request.form['sex'])
+            chest_pain_type = int(request.form['chest_pain_type'])
+            resting_blood_pressure = int(request.form['resting_blood_pressure'])
+            serum_cholesterol = int(request.form['serum_cholesterol'])
+            fasting_blood_sugar = int(request.form['fasting_blood_sugar'])
+            resting_ecg = int(request.form['resting_ecg'])
+            max_heart_rate = float(request.form['max_heart_rate'])
+            exercise_angina = int(request.form['exercise_angina'])
+            oldpeak = float(request.form['oldpeak'])
+            slope = int(request.form['slope'])
+            num_vessels = int(request.form['num_vessels'])
+            thal = int(request.form['thal'])
+            
+            # Prepare the input data for prediction
+            input_data = {
+                'age': age,
+                'sex': sex,
+                'trestbps': resting_blood_pressure,
+                'chol': serum_cholesterol,
+                'thalach': max_heart_rate,
+                'oldpeak': oldpeak,
+                'cp_1': 1 if chest_pain_type == 1 else 0,
+                'cp_2': 1 if chest_pain_type == 2 else 0,
+                'cp_3': 1 if chest_pain_type == 3 else 0,
+                'fbs_1': fasting_blood_sugar,
+                'restecg_1': 1 if resting_ecg == 1 else 0,
+                'restecg_2': 1 if resting_ecg == 2 else 0,
+                'exang_1': exercise_angina,
+                'slope_1': 1 if slope == 1 else 0,
+                'slope_2': 1 if slope == 2 else 0,
+                'ca_1': 1 if num_vessels == 1 else 0,
+                'ca_2': 1 if num_vessels == 2 else 0,
+                'ca_3': 1 if num_vessels == 3 else 0,
+                'ca_4': 1 if num_vessels == 4 else 0,
+                'thal_1': 1 if thal == 1 else 0,
+                'thal_2': 1 if thal == 2 else 0,
+                'thal_3': 1 if thal == 3 else 0
+            }
+            
+            # Create a DataFrame from the input data
+            input_df = pd.DataFrame([input_data])
+            
+            # Make prediction
+            prediction = heart_model.predict(input_df)
+            
+            # Return prediction result
+            result = "Heart Disease Detected" if prediction == 1 else "No Heart Disease Detected"
+            return jsonify({'result': result})
+        
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400  # Bad Request
+    
+    return jsonify({'error': 'Invalid request method'}), 405  # Method Not Allowed
 
 # Brain Tumor Prediction
 brain_model = load_model('./compressed_models/brain_tumor/brain_model.h5')
@@ -193,9 +202,12 @@ def alzheimers():
         if image:
             # Perform prediction
             predicted_class = predict_on_image(image, loaded)
+            print("class",predicted_class)
             return jsonify({'result': predicted_class})
 
-        return "No file selected!"
+        else:
+            return jsonify({'error': 'No file selected!'})
+
     return render_template('Alzheimers/index.html')
 
 

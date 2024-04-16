@@ -51,6 +51,7 @@ const BrainCancer = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
   };
+  
   return (
     <>
     <h2>Brain Cancer Detection</h2>
@@ -70,7 +71,7 @@ const BrainCancer = () => {
         <header>Drag & Drop to Upload File</header>
         <span>OR</span>
         <button onClick={() => document.querySelector('input[type="file"]').click()}>Browse File</button>
-        <input type="file" hidden onChange={handleFileChange} />
+        <input type="file" hidden onChange={handleFileChange} accept="image/*" />
       </div>
   
 
