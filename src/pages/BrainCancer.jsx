@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './FileInput.css'; // Import your CSS file
+import './styles/FileInput.css'; // Import your CSS file
 
 const BrainCancer = () => {
   const [isDragging, setIsDragging] = useState(false);

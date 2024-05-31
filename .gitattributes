@@ -1,0 +1,2 @@
+api/compressed_models/skin_cancer/skincancer.h5 filter=lfs diff=lfs merge=lfs -text
+api/compressed_models/skin_cancer/skincancer.pkl filter=lfs diff=lfs merge=lfs -text

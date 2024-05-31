@@ -56,65 +56,30 @@ def parkinson():
 heart_model = pickle.load(open('./compressed_models/heart_disease/heart-disease-model.pkl','rb'))
 
 @cross_origin()
-@app.route('/heart', methods=['GET', 'POST'])
+@app.route('/skin', methods=['GET', 'POST'])
 def heart():
     if request.method == 'POST':
-        try:
-            data = request.json
-            print(data)
-            age = int(data['age'])
-            sex = int(data['sex'])
-            chest_pain_type = int(data['chest_pain_type'])
-            resting_blood_pressure = int(data['resting_blood_pressure'])
-            serum_cholesterol = int(data['serum_cholesterol'])
-            fasting_blood_sugar = int(data['fasting_blood_sugar'])
-            resting_ecg = int(data['resting_ecg'])
-            max_heart_rate = float(data['max_heart_rate'])
-            exercise_angina = int(data['exercise_angina'])
-            oldpeak = float(data['oldpeak'])
-            slope = int(data['slope'])
-            num_vessels = int(data['num_vessels'])
-            thal = int(data['thal'])
-            
-            # Prepare the input data for prediction
-            input_data = {
-                'age': age,
-                'sex': sex,
-                'trestbps': resting_blood_pressure,
-                'chol': serum_cholesterol,
-                'thalach': max_heart_rate,
-                'oldpeak': oldpeak,
-                'cp_1': 1 if chest_pain_type == 1 else 0,
-                'cp_2': 1 if chest_pain_type == 2 else 0,
-                'cp_3': 1 if chest_pain_type == 3 else 0,
-                'fbs_1': fasting_blood_sugar,
-                'restecg_1': 1 if resting_ecg == 1 else 0,
-                'restecg_2': 1 if resting_ecg == 2 else 0,
-                'exang_1': exercise_angina,
-                'slope_1': 1 if slope == 1 else 0,
-                'slope_2': 1 if slope == 2 else 0,
-                'ca_1': 1 if num_vessels == 1 else 0,
-                'ca_2': 1 if num_vessels == 2 else 0,
-                'ca_3': 1 if num_vessels == 3 else 0,
-                'ca_4': 1 if num_vessels == 4 else 0,
-                'thal_1': 1 if thal == 1 else 0,
-                'thal_2': 1 if thal == 2 else 0,
-                'thal_3': 1 if thal == 3 else 0
-            }
-            
-            # Create a DataFrame from the input data
-            input_df = pd.DataFrame([input_data])
-            
-            # Make prediction
-            prediction = heart_model.predict(input_df)
-            
-            # Return prediction result
-            result = "Heart Disease Detected" if prediction == 1 else "No Heart Disease Detected"
+        imagefile = request.files.get('skinImg')
+
+        if imagefile:
+            # Read the image file
+            image_data = imagefile.read()
+            # Convert the image data into a PIL Image object
+            image = Image.open(io.BytesIO(image_data))
+            # Convert the PIL Image to OpenCV format (BGR)
+            opencvImage = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+            img = cv2.resize(opencvImage, (150, 150))
+            img = img.reshape(1, 150, 150, 3)
+            p = brain_model.predict(img)
+            p = np.argmax(p, axis=1)[0]
+
+            if p == 0:
+                result = 'Benign Tumor'
+            elif p == 1:
+                result = 'Maligant Tumor'
             return jsonify({'result': result})
         
-        except Exception as e:
-            return jsonify({'error': str(e)}), 400  # Bad Request
-    return render_template('Heart/index.html')
+    return render_template('Skin/index.html')
    
 
 # Brain Tumor Prediction

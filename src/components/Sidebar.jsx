@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Icon from "../Images/2.PNG";
-import Profile from "../Images/doc.webp";
-import Dashboard from "../Images/dashboard.svg";
-import HeartDisease from "../Images/transactions.svg";
-import BrainCancer from "../Images/performance.svg";
-import Alzheimers from "../Images/news.svg";
-import Parkinson from "../Images/settings.svg";
-import Chatbot from "../Images/support.svg";
+import Icon from "../Images/logo_heart.PNG";
+import Profile from "../Images/profile.webp";
+// import Dashboard from "../Images/dash.svg";
+import HeartDisease from "../Images/heart.svg";
+import BrainCancer from "../Images/brain.svg";
+import Alzheimers from "../Images/alzheimers.svg";
+import Parkinson from "../Images/parkinson.svg";
+import Chatbot from "../Images/chatbot.svg";
 import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
@@ -66,10 +66,6 @@ const Sidebar = () => {
                 }
             >
                 <ul>
-                    <li className={location.pathname === "/" ? "active" : ""}>
-                        <img src={Dashboard} alt="dashboard" />
-                        <a href="/">dashboard</a>
-                    </li>
                     <li
                         className={
                             location.pathname === "/HeartDisease"
@@ -88,14 +84,7 @@ const Sidebar = () => {
                         <img src={BrainCancer} alt="Brain Cancer" />
                         <a href="/BrainCancer">Brain Cancer</a>
                     </li>
-                    <li
-                        className={
-                            location.pathname === "/news" ? "active" : ""
-                        }
-                    >
-                        <img src={Alzheimers} alt="Alzheimer’s" />
-                        <a href="/Alzheimers">Alzheimer’s </a>
-                    </li>
+                    
                     <li
                         className={
                             location.pathname === "/settings" ? "active" : ""
@@ -104,6 +93,16 @@ const Sidebar = () => {
                         <img src={Parkinson} alt="Parkinson" />
                         <a href="/Parkinson">Parkinson</a>
                     </li>
+
+                    <li
+                        className={
+                            location.pathname === "/news" ? "active" : ""
+                        }
+                    >
+                        <img src={Alzheimers} alt="Alzheimer’s" />
+                        <a href="/Alzheimers">Alzheimer’s </a>
+                    </li>
+                    
                     <li
                         className={
                             location.pathname === "/support" ? "active" : ""

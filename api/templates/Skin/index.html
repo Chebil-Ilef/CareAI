@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image</title>
+</head>
+<body>
+    <h2>Upload Image</h2>
+    <form method="POST" enctype="multipart/form-data" action="/skin">
+        <input type="file" name="skinImg" id="imagefile"/>
+        <input type="submit" value="Upload">
+    </form>
+    {% if result %}
+    <h3>Result:</h3>
+    <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>
