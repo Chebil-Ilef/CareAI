@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import numpy as np
 import pickle
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import cv2
 import io
 import tensorflow as tf
@@ -52,32 +52,32 @@ def parkinson():
 
 
 
-# Heart Disease Prediction
-heart_model = pickle.load(open('./compressed_models/heart_disease/heart-disease-model.pkl','rb'))
+# Skin Cancer Prediction
+# skin_model = keras.models.load_model('./compressed_models/skin_cancer/skincancer.h5')
 
 @cross_origin()
 @app.route('/skin', methods=['GET', 'POST'])
-def heart():
-    if request.method == 'POST':
-        imagefile = request.files.get('skinImg')
+def skin():
+    # if request.method == 'POST':
+        # imagefile = request.files.get('skinImg')
 
-        if imagefile:
-            # Read the image file
-            image_data = imagefile.read()
-            # Convert the image data into a PIL Image object
-            image = Image.open(io.BytesIO(image_data))
-            # Convert the PIL Image to OpenCV format (BGR)
-            opencvImage = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-            img = cv2.resize(opencvImage, (150, 150))
-            img = img.reshape(1, 150, 150, 3)
-            p = brain_model.predict(img)
-            p = np.argmax(p, axis=1)[0]
+        # if imagefile:
+        #     # Read the image file
+        #     image_data = imagefile.read()
+        #     # Convert the image data into a PIL Image object
+        #     image = Image.open(io.BytesIO(image_data))
+        #     # Convert the PIL Image to OpenCV format (BGR)
+        #     opencvImage = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+        #     img = cv2.resize(opencvImage, (150, 150))
+        #     img = img.reshape(1, 150, 150, 3)
+        #     p = skin_model.predict(img)
+        #     p = np.argmax(p, axis=1)[0]
 
-            if p == 0:
-                result = 'Benign Tumor'
-            elif p == 1:
-                result = 'Maligant Tumor'
-            return jsonify({'result': result})
+        #     if p == 0:
+        #         result = 'Benign Tumor'
+        #     elif p == 1:
+        #         result = 'Maligant Tumor'
+        #     return jsonify({'result': result})
         
     return render_template('Skin/index.html')
    
