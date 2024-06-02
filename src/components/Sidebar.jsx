@@ -73,8 +73,8 @@ const Sidebar = () => {
                                 : ""
                         }
                     >
-                        <img src={Skin} alt="Heart Disease" />
-                        <a href="/HeartDisease">Skin Cancer</a>
+                        <img src={Skin} alt="Skin Cancer" />
+                        <a href="/skin">Skin Cancer</a>
                     </li>
                     <li
                         className={
