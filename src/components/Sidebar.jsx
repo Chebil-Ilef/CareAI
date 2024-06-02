@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Icon from "../Images/logo_heart.PNG";
 import Profile from "../Images/profile.webp";
 // import Dashboard from "../Images/dash.svg";
-import HeartDisease from "../Images/heart.svg";
+import Skin from "../Images/skin.svg";
 import BrainCancer from "../Images/brain.svg";
 import Alzheimers from "../Images/alzheimers.svg";
 import Parkinson from "../Images/parkinson.svg";
@@ -54,8 +54,8 @@ const Sidebar = () => {
             >
                 <img src={Profile} alt="profile" className="profile" />
                 <div className="profileContents">
-                    <p className="name">Hello, John 👋🏻</p>
-                    <p>johnsmith@gmail.com</p>
+                    <p className="name">Hello there 👋🏻</p>
+                    <p>hospital@gmail.com</p>
                 </div>
             </div>
             <div
@@ -73,8 +73,8 @@ const Sidebar = () => {
                                 : ""
                         }
                     >
-                        <img src={HeartDisease} alt="Heart Disease" />
-                        <a href="/HeartDisease">Heart Disease</a>
+                        <img src={Skin} alt="Heart Disease" />
+                        <a href="/HeartDisease">Skin Cancer</a>
                     </li>
                     <li
                         className={
