@@ -1,73 +1,114 @@
-# CareAI
+# CareAI: Multifaceted Healthcare Web Application 🩺
 
-# Getting Started with Create React App
+CareAI is a comprehensive healthcare web application built using React Js and Flask leveraging machine learning and deep learning technologies to tackle critical medical challenges. The application includes components for disease detection and prediction, as well as a healthcare chatbot using LLMs and CTransformers designed for medical staff interaction. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Model Training and Deployment](#model-training-and-deployment)
+- [Development Tools](#development-tools)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Available Scripts
+## Project Overview 🏥
+CareAI provides a suite of predictive models for various diseases:
+- **Skin Cancer Detection**
+- **Brain Tumor Classification**
+- **Alzheimer’s Stage Prediction**
+- **Parkinson’s Disease Detection**
 
-In the project directory, you can run:
+Additionally, CareAI includes a healthcare chatbot to assist medical staff with information and preliminary diagnosis.
 
-### `npm start`
+## Features 🚀
+- **Predictive Models**: Tailored machine learning models for specific diseases and deployed each in an online endpoint in Azure.
+- **User-Friendly Web Interface**: Built with React for a seamless user experience.
+- **Backend API**: Flask-based backend for model consumption and data processing.
+- **Healthcare Chatbot**: AI-powered chatbot for medical staff interaction built using LLama2 and CTransformers
+- **Cloud Deployment**: Models deployed on Azure ML Studio for scalability and accessibility.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation 💻
+### Prerequisites
+- Node.js and npm (for frontend)
+- Python 3.8 or later (for backend)
+- Git
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Steps
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Chebil-Ilef/CareAI.git
+   cd CareAI
+   ```
 
-### `npm test`
+2. **Frontend Setup**
+   ```bash
+   cd src
+   npm install
+   npm start
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Backend Setup**
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate (on Windows: venv\Scripts\activate)
+   pip install -r requirements.txt
+   flask run
+   ```
 
-### `npm run build`
+## Usage 🧑‍⚕️
+1. **Frontend**: Access the React application via `http://localhost:3000`.
+2. **Backend**: Ensure the Flask server is running at `http://localhost:5000`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application provides an intuitive interface for interacting with predictive models. Users can input data for disease prediction and receive results through the web interface.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Model Training and Deployment 🤖
+### Training And Datasets
+1. **Skin Cancer Detection**: Use NumPy and Pandas for data cleaning and transformation.
+     - Exploratory Data Analysis (EDA): Python with NumPy, Pandas
+     - Deep Learning Framework: TensorFlow, Keras
+     - Tested Algorithms: SVM,  EfficientNetB3
+     - Selected Best Algorithm: EfficientNetB3
+     - Dataset Link : https://www.kaggle.com/datasets/fanconic/skin-cancer-malignant-vs-benign
+3. **Brain Tumor Classification**: Train models using Scikit-Learn for ML and TensorFlow/Keras for DL.
+     - Deep Learning Framework: TensorFlow Keras
+     - Python libraries for data preprocessing (NumPy, Pandas)
+     - Tested Algorithms: CNN (Sequential ), EfficientNetB0
+     - Selected Best Algorithm: EfficientNetB0
+     - Dataset Link : https://www.kaggle.com/datasets/babaraliuser/brain-mri-images-dataset
+4. **Parkinson’s Disease Detection**:
+    - Machine Learning Framework: Scikit-learn, TensorFlow
+    - Classification Algorithms: XGboost, Random Forest, K Neighbors    
+    - Python libraries for data preprocessing (NumPy, Pandas)
+    - Selected Best Algorithm:  XGboost, Random forest
+    - Dataset Link : https://www.kaggle.com/competitions/amp-parkinsons-disease-progression-prediction/discussion/388322
+5. **Alzheimer’s Stage Prediction**:
+    - Exploratory Data Analysis (EDA): Python with NumPy, Pandas
+    - Deep Learning Framework: TensorFlow , Keras
+    - Tested Algorithms: InceptionV3, VGG19  (Transfert Learning)
+    - Selected Best Algorithm: VGG19
+    - Dataset Link : https://www.kaggle.com/datasets/tourist55/alzheimers-dataset-4-class-of-images
 
 ### Deployment
+1. **Local Deployment**: We compressed the ML model in .pkl files and the DL models in .h5 files to be consumed by the backend of the app.
+2. **Cloud Deployment**: We deployed the models as endpoints on Azure ML Studio following MLOps principles.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Development Tools 🛠️
+- **Frontend**: React, Redux, React Router, SASS, Styled Components, Material-UI
+- **Backend**: Flask, Flask-RESTful, Flask-CORS
+- **Machine Learning**: Scikit-Learn, TensorFlow/Keras, NumPy, Pandas
+- **API Development**: Flask-RESTful
+- **Data Storage**: Pickle, HDF5
+- **Development Tools**: npm, virtualenv/venv, pip, VS Code
+- **Version Control**: Git, GitHub
 
-### `npm run build` fails to minify
+## Contributing 🤝
+We welcome contributions to CareAI! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a new Pull Request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
