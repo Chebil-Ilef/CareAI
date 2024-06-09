@@ -111,4 +111,24 @@ We welcome contributions to CareAI! Please follow these steps:
 4. Push to the branch (`git push origin feature-branch`).
 5. Create a new Pull Request.
 
+1. **Local Deployment**: We compressed the ML model in .pkl files and the DL models in .h5 files to be consumed by the backend of the app.
+2. **Cloud Deployment**: We deployed the models as endpoints on Azure ML Studio following MLOps principles.
+
+## Development Tools 🛠️
+- **Frontend**: React, Redux, React Router, SASS, Styled Components, Material-UI
+- **Backend**: Flask, Flask-RESTful, Flask-CORS
+- **Machine Learning**: Scikit-Learn, TensorFlow/Keras, NumPy, Pandas
+- **API Development**: Flask-RESTful
+- **Data Storage**: Pickle, HDF5
+- **Development Tools**: npm, virtualenv/venv, pip, VS Code
+- **Version Control**: Git, GitHub
+
+## Contributing 🤝
+We welcome contributions to CareAI! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Create a new Pull Request.
+
 
