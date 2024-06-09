@@ -111,5 +111,3 @@ We welcome contributions to CareAI! Please follow these steps:
 4. Push to the branch (`git push origin feature-branch`).
 5. Create a new Pull Request.
 
-1. **Local Deployment**: We compressed the ML model in .pkl files and the DL models in .h5 files to be consumed by the backend of the app.
-2. **Cloud Deployment**: We deployed the models as endpoints on Azure ML Studio following MLOps principles.
